@@ -1,12 +1,25 @@
 defmodule GSMLGWeb.Router do
   use GSMLGWeb, :router
 
+  pipeline :browser do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_live_flash
+    plug :protect_from_forgery
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
 
+  # Other scopes may use custom stacks.
   scope "/api", GSMLGWeb do
     pipe_through :api
+
+    get "/nodes", NodeController, :index
+    resources "/blogs", BlogController, only: [:index, :create, :update, :show]
+
   end
 
   # Enables LiveDashboard only for development
@@ -23,5 +36,11 @@ defmodule GSMLGWeb.Router do
       pipe_through [:fetch_session, :protect_from_forgery]
       live_dashboard "/dashboard", metrics: GSMLGWeb.Telemetry
     end
+  end
+
+  scope "/", GSMLGWeb do
+    pipe_through :browser # Use the default browser stack
+
+    get "/*not_found", PageController, :not_found
   end
 end

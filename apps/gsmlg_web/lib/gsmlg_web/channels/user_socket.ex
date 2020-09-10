@@ -2,7 +2,8 @@ defmodule GSMLGWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", GSMLGWeb.RoomChannel
+  channel "room:chess", GSMLGWeb.ChessChannel
+  channel "node:lobby", GSMLGWeb.NodeChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

@@ -20,7 +20,7 @@ defmodule GSMLGWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: GSMLGWeb
-
+      import Phoenix.LiveView.Controller
       import Plug.Conn
       import GSMLGWeb.Gettext
       alias GSMLGWeb.Router.Helpers, as: Routes
@@ -37,6 +37,9 @@ defmodule GSMLGWeb do
       import Phoenix.Controller,
         only: [get_flash: 1, get_flash: 2, view_module: 1, view_template: 1]
 
+      # Use all HTML functionality (forms, tags, etc)
+      use Phoenix.HTML
+
       # Include shared imports and aliases for views
       unquote(view_helpers())
     end
@@ -48,6 +51,7 @@ defmodule GSMLGWeb do
 
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
@@ -65,6 +69,7 @@ defmodule GSMLGWeb do
 
       import GSMLGWeb.ErrorHelpers
       import GSMLGWeb.Gettext
+      import Phoenix.LiveView.Helpers
       alias GSMLGWeb.Router.Helpers, as: Routes
     end
   end

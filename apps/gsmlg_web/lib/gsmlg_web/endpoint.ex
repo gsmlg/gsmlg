@@ -11,8 +11,10 @@ defmodule GSMLGWeb.Endpoint do
   ]
 
   socket "/socket", GSMLGWeb.UserSocket,
-    websocket: true,
-    longpoll: false
+    longpull: false,
+    websocket: [
+      connect_info: [:peer_data, :x_headers, :uri, :user_agent, session: @session_options]
+    ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
@@ -23,12 +25,14 @@ defmodule GSMLGWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :gsmlg_web,
-    gzip: false,
-    only: ~w(css fonts images js favicon.ico robots.txt)
+    gzip: false
+  # only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
+    plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
     plug Phoenix.Ecto.CheckRepoStatus, otp_app: :gsmlg_web
   end
