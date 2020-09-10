@@ -39,7 +39,8 @@ defmodule GSMLG.MixProject do
       {:phoenix_pubsub, "~> 2.0"},
       {:ecto_sql, "~> 3.4"},
       {:myxql, ">= 0.0.0"},
-      {:jason, "~> 1.0"}
+      {:jason, "~> 1.0"},
+      {:libcluster, github: "gsmlg/libcluster", branch: "master"},
     ]
   end
 

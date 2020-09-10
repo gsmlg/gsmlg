@@ -4,7 +4,7 @@ defmodule GSMLG.Node.Supervisor do
   alias GSMLG.Node.Self
   alias GSMLG.Node.Others
 
-  def start_link() do
+  def start_link(_) do
     Supervisor.start_link(__MODULE__, :ok);
   end
 
